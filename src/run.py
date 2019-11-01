@@ -1,14 +1,31 @@
-from flask import Response
+from flask import Flask, Response
 
-from src import create_app
+from src.insrastructure import DB
+from src.routes.restaurant import restaurant
+from src.routes.tables import tables
+
+
+def setup_db():
+    DB['restaurant'] = []
+    DB['table'] = []
+
+
+def create_app():
+    setup_db()
+    app = Flask(__name__, instance_relative_config=False)
+    with app.app_context():
+        app.register_blueprint(restaurant)
+        app.register_blueprint(tables)
+        return app
+
 
 app = create_app()
 
 
 @app.route('/_health_check', methods=['GET'])
 def check():
-    response = Response(status=200)
-    return response
+    resp = Response(status=200, mimetype='application/json')
+    return resp
 
 
 if __name__ == "__main__":
