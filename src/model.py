@@ -15,3 +15,8 @@ class Table:
         self.id = str(uuid.uuid4())
 
 
+class City:
+    def __init__(self, name):
+        self.name = name
+        self.id = str(uuid.uuid4())
+
