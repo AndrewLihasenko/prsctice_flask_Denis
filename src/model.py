@@ -1,11 +1,12 @@
 import uuid
+from src import db
 
 
-class Restaurant:
-    def __init__(self, name, stars):
-        self.name = name
-        self.stars = stars
-        self.id = str(uuid.uuid4())
+class Restaurant(db.Model):
+    __tablename__ = 'restaurants'
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
+    stars = db.Column(db.String(120), nullable=False)
 
 
 class Table:
